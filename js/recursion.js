@@ -1,7 +1,7 @@
 'use strict';
 
 // Возведение в степень
-const pow = (base, exponent) => base ** exponent;
+const pow = (base, exponent) => base * (base ** (exponent - 1));
 
 console.log(pow(2, 4));
 console.log(pow(5, 2));
@@ -31,24 +31,8 @@ function bracketWrapper(n) {
 
 bracketWrapper(3);
 
-// Массив
-function CustomArray() {
-    if(!new.target) {
-        return new Array();
-    }
-
-    for(let i = 0; i < arguments.length; i++){
-        this[i] = arguments[i];
-    }
-
-    this.length = arguments.length;
-}
-
-const proto = new CustomArray();
-CustomArray.prototype = proto;
-
 // Метод flat()
-proto.flat = function(array, n = 1) {
+const flat = function(array, depth = 1) {
     const newArray = [];
     
     const collectAllItems = (array, n) => {
@@ -67,12 +51,11 @@ proto.flat = function(array, n = 1) {
         }
     }
 
-    collectAllItems(array, n);
+    collectAllItems(array, depth);
     return newArray;
 }
 
+const array1 = [1, 2, [7, 9], 4, [2, [14, [39, 56]]], [5, [8, 6]]];
 
-const array1 = new CustomArray(1, 2, [7, 9], 4, [2, [14, [39, 56]]], [5, [8, 6]]);
-
-const array2 = CustomArray.prototype.flat(array1, 2);
+const array2 = flat(array1, 2);
 console.table(array2);
