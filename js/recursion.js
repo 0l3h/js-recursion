@@ -1,7 +1,13 @@
 'use strict';
 
 // Возведение в степень
-const pow = (base, exponent) => base * (base ** (exponent - 1));
+const pow = function(base, exponent) {
+    if(exponent === 0) {
+        return 1;
+    }
+
+    return base * pow(base, exponent - 1);
+}
 
 console.log(pow(2, 4));
 console.log(pow(5, 2));
